@@ -1,9 +1,4 @@
 <!DOCTYPE html>
-
-<!--
-     1) CSS en un archivo aparte 
-     2) inline css
- -->
 <html>
     <head>
         <title>Bienvenidos a UX! :)</title>
@@ -20,7 +15,7 @@
               <a href="#" class="btn btn-primary">Go somewhere</a>
             </div>
           </div>
-        <button type="button" class="btn btn-primary">Base class</button>
+        <button type="button" class="btn btn-primary" id="btnAccion" onclick="{console.log(3)}">Base class</button>
         <h1 id="tituloPrincipal"  style="color: chartreuse;">Hola desde H1</h1>
         <h1 >Hola desde H1</h1>
         <h2>hOLA H2</h2>
@@ -44,3 +39,40 @@
             <h2>hOLA H2</h2>
     </body>
 </html>
+<script>
+
+  /*
+  = asignacion 
+  == compa
+  === compa estricta 
+  */
+
+  /*
+  2 formas de crear funciones 
+    1) clasica / comun 
+    2) arrow functions / funciones anonimas 
+
+  */
+  // let botoncito= document.getElementById("btnAccion")
+  // botoncito.addEventListener('click',(event)=>{
+  //   console.log('Codigo dentro de la funcion anonima!!!')
+  // })
+  console.log("El valor del boton es ", botoncito);
+  let res1= imprimir(1)
+  let res2 = imprimir(2)
+
+  // console.log(res1,res2)
+
+  
+  //Funcion comun 
+  function imprimir(opcion){
+    console.log("Hola mundo normal");
+    return "Hola"
+  }
+
+  let imprimirArrow = (opcion)=>{
+    console.log("Hola Mundo desde la arrow Func!")
+  }
+
+
+</script>

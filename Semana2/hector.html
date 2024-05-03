@@ -15,7 +15,7 @@
               <a href="#" class="btn btn-primary">Go somewhere</a>
             </div>
           </div>
-        <button type="button" class="btn btn-primary" id="btnAccion" onclick="{console.log(3)}">Base class</button>
+        
         <h1 id="tituloPrincipal"  style="color: chartreuse;">Hola desde H1</h1>
         <h1 >Hola desde H1</h1>
         <h2>hOLA H2</h2>
@@ -28,12 +28,13 @@
         <!-- <img src="https://images.ecestaticos.com/UUJVxz-Fpydz_RHZnEYnvruo59Q=/0x0:2121x1414/1200x1200/filters:fill(white):format(jpg)/f.elconfidencial.com%2Foriginal%2F2a1%2F585%2F565%2F2a15855650049ccff5659cc7787d37ee.jpg" alt="Muffin" height="200px"  width="300px"> -->
          <img src="./src/gatito.jpg" alt="Muffin" height="200px"  width="300px"> 
         <br>
-        <input type="text" placeholder="Nombre" />
-        <input type="email" placeholder="email" />
-        <input type="password" placeholder="Password" />
+          
+        <input id ="input_nombre" type="text" placeholder="Nombre" />
+        <input id ="input_email" type="email" placeholder="email" />
+        <input id ="input_password" type="password" placeholder="Password" />
 
-        <input type="button" value="Log in" />
-
+        <input type="button" class="btn btn-danger" value="Log in" id = "loginbtn" />
+        <button type="button" class="btn btn-primary" id="btnAccion" >Limpiar</button>
         <p class="descripcion"> Hola este es mi texto <br>
             para la pagina</p>
             <h2>hOLA H2</h2>
@@ -53,10 +54,63 @@
     2) arrow functions / funciones anonimas 
 
   */
-  // let botoncito= document.getElementById("btnAccion")
-  // botoncito.addEventListener('click',(event)=>{
-  //   console.log('Codigo dentro de la funcion anonima!!!')
-  // })
+  let botoncito= document.getElementById("btnAccion")
+  let inputEmail = document.getElementById("input_email")
+  let inputPassword = document.getElementById("input_password")
+  let inputNombre = document.getElementById("input_nombre")
+  let loginbtn = document.getElementById("loginbtn")
+  
+  loginbtn.addEventListener('click',(event)=>{
+    let usr = {
+      nombre : inputNombre.value,
+      email: inputEmail.value,
+      pasword: inputPassword.value,
+    }
+
+     let {nombre,email}= usr
+    let registro ={
+      ...usr,
+      UUID: "73638638736",
+      zipCode:11101,
+      address : "TGU,MDC",
+      nombre:"overrided claudia",
+      
+    }
+    console.log("Nuevo objeto: ", registro)
+
+    //Mapping != Casteo 
+    let arr= [1,2,3,4]
+    let arr2 = [0,5, ...arr]
+    console.log("arreglo nuevo ",arr2 )
+
+    // let nuevo_arr= arr.filter(elemento => elemento>=5);
+    // let arreglo_mapp = arr.map(elemento=> elemento+30);
+    
+
+  /*
+  JSON  
+    {
+      "mensaje" : "Mi nombre es claudia",
+      "edad" : 90 ,
+      "clase": {
+        "codigo": "ccc304",
+        "nombre": "Experincia de usuario"
+      },
+      "lenguajes": ["javascript", {
+        "nombre": "kotlin"
+      }]
+    }
+    */
+  })
+
+  botoncito.addEventListener('click',(event)=>{
+    console.log("limpiando.....")
+    inputEmail.value =""
+    inputPassword.value =""
+    inputNombre.value =""
+
+  })
+
   console.log("El valor del boton es ", botoncito);
   let res1= imprimir(1)
   let res2 = imprimir(2)

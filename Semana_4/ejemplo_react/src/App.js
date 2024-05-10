@@ -1,37 +1,28 @@
 import logo from './logo.svg';
 import './App.css';
+import Boton from './atoms/boton/Boton';
+import CustomInput from './atoms/CustomInput/CustomInput';
 
 
 /*Componenetes funcionales 
     ->funcionales   
     -> class componentes
-    */
-
-let url = "12345"
+*/
 
 function App() {
   return (
     <div className="App" >
       <header className="App-header">
-        <img src={url} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-     
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <CustomInput/>
+        <Boton titulo="hola" hola= "mundo"/>
+        <Boton titulo = "click"/>
+        <Boton titulo ="borrar" />
+        <Boton titulo = "agregar"/>
+      
       </header>
     </div>
 
   );
 }
-
-
 
 export default App;

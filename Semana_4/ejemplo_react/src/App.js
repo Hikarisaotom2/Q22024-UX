@@ -1,7 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import Boton from './atoms/boton/Boton';
-import CustomInput from './atoms/CustomInput/CustomInput';
+import CustomInput from './mocules/CustomInput/CustomInput';
 
 
 /*Componenetes funcionales 

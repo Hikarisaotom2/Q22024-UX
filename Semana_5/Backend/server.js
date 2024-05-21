@@ -1,14 +1,21 @@
 /*haciendo referencia a express*/
 const express = require('express')
 
+const  bodyParser = require('body-parser')
+
+var urlEncodeParser = bodyParser.urlencoded({extended:true});
+
 /*inciializando express*/
 const app = express()
+app.use(urlEncodeParser)
 
 /*
-terminologia: 
-Payload: 
-Callback: un fragmento de codigo que se ejecuta luego de un suceso
+                    terminologia: 
+    Endpoint: es la url a la que se le hace una peticion
+    Payload: es la informacion que se envia a traves de una peticion 
+    Callback: un fragmento de codigo que se ejecuta luego de un suceso
 */
+
 /*definir el puerto en el que se levantara el servicio*/
 
 /*
@@ -22,11 +29,48 @@ app.listen(port,()=>{
     //Despues de eso, podemos hacer peticiones a la url  http://localhost:port
 })
 
+// app.post('/saludar',(req,res)=>{})
+// app.put('/saludar',(req,res)=>{})
+// app.delete('/saludar',(req,res)=>{})
+                 //request, response
 app.get('/saludar',(req,res)=>{
-    console.log("Recibimos una solicitud.....");
-    res.send("Hola desde mi primer api!!!! :) ");
+console.log("peticiendo procesada")
+    res.status(200).send([
+        {
+            id:123,
+            nombre: 'Jorge',
+            apellido: 'Lopez'
+        },
+        {
+            id:2345,
+            nombre: 'Juan',
+            apellido: 'Perez'
+        }
+    ]);
 }
 );
+
+app.post('/logIn',(req,res)=>{
+    console.log("usuario",req.body.usuario);
+    console.log("contrasena",req.body.contrasena)
+    if(req.body.usuario === 'admin' && req.body.contrasena === 'admin'){
+        res.status(200).send({
+            message: 'Bienvenido',
+            token: '123456789',
+            id: 123,
+            nombre: 'Jorge',
+        });
+    }else{
+        res.status(401).send({
+            message: 'Credenciales incorrectas',
+            descripcion: 'Usuario o contrasena incorrecta'
+        });
+    }
+       
+    }
+);
+
+
 
 
 

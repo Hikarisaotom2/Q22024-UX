@@ -5,7 +5,7 @@ const  bodyParser = require('body-parser')
 
 const path = require('path')
 const cors = require('cors');
-const { ServerApiVersion,MongoClient } = require('mongodb');
+const { ServerApiVersion,MongoClient, ObjectId } = require('mongodb');
 
 let port = 3001;
 
@@ -143,8 +143,11 @@ app.post('/logIn',(req,res)=>{
         const resultado = await collection.updateOne({
             //where usuario = req.body.usuario
             usuario: req.body.usuario,
+            
         },{
             $set:{
+            //    usuario: req.body.usuario,
+            //    contrasena: req.body.contrasena,
                ...req.body
             }
         });
@@ -160,11 +163,35 @@ app.post('/logIn',(req,res)=>{
       }
     });
     /*delete*/
-    app.delete('/delete',(req,res)=>{
+    app.delete('/delete',async (req,res)=>{
+        try{
+            const client = new MongoClient(uri);
+            //conectarse a la db
+            const database = client.db('pruebaBackend');
+            //seleccionar la coleccion
+            const collection = database.collection('logInUsers');
+            //delete document 
+            const query = {_id: new ObjectId(req.body.id)};
+            const resultado = await collection.deleteOne(query);
 
-        res.status(200).send({
-            mensaje: 'Usuario eliminado con exito',
-        });
+            if(resultado.deletedCount === 1){
+                res.status(200).send({
+                    mensaje: 'Usuario eliminado con exito',
+                });
+            }else{
+                res.status(200).send({
+                    mensaje: 'No se encontro el usuario a eliminar, no se elimino nada',
+                });
+            }
+
+           
+        }catch(error){
+            console.error('No se pudo eliminar el usuario',error)
+            res.status(500).send({
+                mensaje: "No se eliminar  el usuario"+error
+            });
+        }
+   
     });
 
     /*como enviar los archivos */
@@ -174,6 +201,55 @@ app.get('/archivo',(req,res)=>{
     console.log(dir)
     res.status(200).sendFile(dir)
 
+});
+
+app.get('/getInfo',async (req,res)=>{
+    try{
+        const client = new MongoClient(uri);
+            //conectarse a la db
+            const database = client.db('pruebaBackend');
+            //seleccionar la coleccion
+            const collection = database.collection('logInUsers');
+        //delete document 
+
+        const findResult = await collection.find({}).toArray();
+        if(findResult.length > 0){
+            res.status(200).send({mensaje: 'Informacion obtenida con exito',resultado: findResult});
+        }else{
+            res.status(200).send({mensaje: 'Informacion obtenida con exito',resultado: []});
+        }
+        
+        console.log('Found documents =>', findResult);
+
+        // const query = {usuario: req.body.usuario};
+        // const options ={
+        //     /*
+        //     sort: {nombre:0, category:1},
+        //     */ 
+        //     projection:{
+        //         usuario:1,
+        //         contrasena:1,
+        //     }
+        // }
+
+        // const resultado = await collection.find({},{
+        //     usuario:1,
+        //     contrasena:1,
+        // },{});
+        //     console.log(resultado)
+        // let resultadoFinal = [];
+
+        // resultado.forEach((doc)=>{
+        //     resultadoFinal.push(doc);
+        // });
+        // res.status(200).send({mensaje: 'Informacion obtenida con exito',
+        // resultado: resultadoFinal});
+    }catch(error){
+        res.status(500).send({
+            mensaje: "algo salio mal",
+            resultado:[],
+        });
+    }
 });
 
 /*

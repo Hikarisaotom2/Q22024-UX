@@ -3,7 +3,7 @@ const express = require('express')
 const  bodyParser = require('body-parser')
 
 const { initializeApp } = require('firebase/app')
-const {getAuth, createUserWithEmailAndPassword} = require('firebase/auth')
+const {getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword,signOut} = require('firebase/auth')
 
 const path = require('path')
 const cors = require('cors');
@@ -89,6 +89,44 @@ app.post('/signUpFirebase',async (req,res)=>{
     });
    }
 });
+
+app.post('/logInFirebase',async (req,res)=>{
+    const auth = getAuth(firebaseApp);
+    const email = req.body.correo;
+    const password = req.body.contrasena;
+
+    try {
+        const userCredential = await signInWithEmailAndPassword(auth,email,password);
+        res.status(200).send({
+            descripcion: 'Sesion iniciada con exito',
+            resultado: userCredential
+        });
+    }catch(error){
+        // NUNCA SE DAN DETALLES ADICIONALES SOBRE EL QUE SALIO MAL 
+        res.status(500).send({
+            descripcion: 'No se pudo inicar sesion',
+            resultado: error
+        });
+    }
+
+});
+
+
+app.post('/logOutFirebase',async (req,res)=>{
+    const auth = getAuth(firebaseApp);
+    try{
+        await signOut(auth);
+        res.status(200).send({
+            descripcion: 'Sesion cerrada con exito',
+        });
+    }catch(error){
+        res.status(500).send({
+            descripcion: 'No se pudo cerrar sesion',
+            resultado: error
+        });
+    }
+
+})
 
 // app.post('/saludar',(req,res)=>{})
 // app.put('/saludar',(req,res)=>{})
@@ -224,6 +262,8 @@ app.post('/logIn',(req,res)=>{
         }
    
     });
+
+
 
     /*como enviar los archivos */
 app.get('/archivo',(req,res)=>{
